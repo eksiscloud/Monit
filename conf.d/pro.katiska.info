@@ -1,0 +1,13 @@
+### pro.katiska.info
+   check host pro.katiska.info with address pro.katiska.info
+
+   # ICMP check
+     if failed icmp type echo
+        for 2 times within 2 cycles
+        then alert
+
+   # HTTPS check
+      if failed port 443 type tcpSSL protocol http
+        with http headers [Host: pro.katiska.info, Cache-Control: no-cache]
+          and request /pong with content = "pro.katiska.info"
+        then alert

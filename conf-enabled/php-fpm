@@ -1,0 +1,20 @@
+# PHP-FPM
+check process php7.4-fpm with pidfile /var/run/php/php7.4-fpm.pid
+    start program = "/usr/sbin/service php7.4-fpm start" with timeout 60 seconds
+    stop program  = "/usr/sbin/service php7.4-fpm stop"
+    if failed unixsocket /var/run/php/php7.4-fpm.sock then restart
+   if 2 restarts within 2 cycles then timeout
+   
+# PHP-FPM-DYNAMIC
+#check process php7.4-fpm-dynamic with pidfile /var/run/php/php7.4-fpm.pid
+#    start program = "/usr/sbin/service php7.4-fpm start" with timeout 60 seconds
+#    stop program  = "/usr/sbin/service php7.4-fpm stop"
+#    if failed unixsocket /var/run/php/php7.4-fpm-dynamic.sock then restart
+#   if 2 restarts within 2 cycles then timeout
+   
+# PHP-FPM-ONDEMAND
+#check process php7.4-fpm-ondemand with pidfile /var/run/php/php7.4-fpm.pid
+#    start program = "/usr/sbin/service php7.4-fpm start" with timeout 60 seconds
+#    stop program  = "/usr/sbin/service php7.4-fpm stop"
+#    if failed unixsocket /var/run/php/php7.4-fpm-ondemand.sock then restart
+#   if 2 restarts within 2 cycles then timeout

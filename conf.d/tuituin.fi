@@ -1,0 +1,13 @@
+### tuituin.fi
+   check host tuituin.fi with address www.tuituin.fi
+
+   # ICMP check
+     if failed icmp type echo
+        for 2 times within 2 cycles
+        then alert
+
+   # HTTPS check
+      if failed port 443 type tcpSSL protocol http
+        with http headers [Host: www.tuituin.fi, Cache-Control: no-cache]
+          and request /pong with content = "www.tuituin.fi"
+        then alert

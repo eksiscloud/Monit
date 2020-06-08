@@ -1,0 +1,61 @@
+set daemon 60 #check services every 60 seconds
+  set logfile /var/log/monit.log
+  set idfile /var/lib/monit/id
+  set statefile /var/lib/monit/state
+
+#Event queue
+  set eventqueue
+      basedir /var/lib/monit/events # set the base directory where events will be stored
+      slots 100                     # optionally limit the queue size
+
+#Mail settings
+ set mail-format {
+     from: monit@eksis.eu
+  subject: monit alert --  $EVENT $SERVICE
+  message: $EVENT Service $SERVICE
+                Date:        $DATE
+                Action:      $ACTION
+                Host:        $HOST
+                Description: $DESCRIPTION
+
+           Your faithful employee,
+           Monit }
+           
+
+# set mailserver smtp.gmail.com port 587
+#  set mailserver smtp.mailgun.org
+#     username "postmaster@example.com" password "very-difficult-one"
+#  using TLSV1 with timeout 30 seconds                         # AWS SES needs that, Mailgun doesn't, Gmail IDK
+#set alert user@example.com not on { instance, action }  #email address which will receive monit alerts
+set mailserver email-smtp.eu-west-1.amazonaws.com port 587  # If the region is Ireland
+username "a lot of characters"" 
+password "even longer one"
+using TLSV1 with timeout 30 seconds
+set alert admin@example.tld not on { instance, action }
+
+#http settings
+ set httpd port 2812 address 0.0.0.0	# allow port 2812 connections on all network adapters
+#    ssl enable                   		# use OpenSSL if you like
+#    pemfile  /var/certs/monit.pem
+    allow 0.0.0.0/0.0.0.0 				# allow all IPs, can use local subnet too
+    allow example.com        		# allow dynamicdns address to connect
+#set httpd port 2812 and
+#    use address localhost
+#    allow localhost
+    allow joedoe:"passwd"		# require user joedoe with password passwd
+
+check system x.x.x.x
+    if loadavg (1min) > 5 then alert
+    if loadavg (5min) > 3 then alert
+    if memory usage > 85% then alert
+        if swap usage > 25% then alert
+    if cpu usage (user) > 80% then alert
+    if cpu usage (system) > 90% then alert
+    if cpu usage (wait) > 20% then alert
+
+check filesystem rootfs with path / #Alert if low on disk space.
+    if space usage > 90% then alert
+
+#allow modular structure
+    include /etc/monit/conf.d/*
+    include /etc/monit/conf-enabled/*

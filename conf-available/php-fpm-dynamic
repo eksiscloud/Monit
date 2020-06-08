@@ -1,0 +1,6 @@
+# PHP-FPM-DYNAMIC
+check process php7.3-fpm-dynamic with pidfile /var/run/php/php7.3-fpm.pid
+#    start program = "/usr/sbin/service php7.3-fpm start" with timeout 60 seconds
+#    stop program  = "/usr/sbin/service php7.3-fpm stop"
+    if failed unixsocket /var/run/php/php7.3-fpm-dynamic.sock then restart
+   if 2 restarts within 2 cycles then timeout
