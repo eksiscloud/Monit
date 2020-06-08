@@ -28,7 +28,7 @@ set daemon 60 #check services every 60 seconds
 #  using TLSV1 with timeout 30 seconds                         # AWS SES needs that, Mailgun doesn't, Gmail IDK
 #set alert user@example.com not on { instance, action }  #email address which will receive monit alerts
 set mailserver email-smtp.eu-west-1.amazonaws.com port 587  # If the region is Ireland
-username "a lot of characters"" 
+username "a lot of characters" 
 password "even longer one"
 using TLSV1 with timeout 30 seconds
 set alert admin@example.tld not on { instance, action }
